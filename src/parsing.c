@@ -6,58 +6,35 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:58:35 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 03:15:15 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/06 13:15:57 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_filepath(char *name, char **env)
+char	*get_filepath(char **env)
 {
-	int		i;
-	int		j;
-	char	*path;
-	
+	int	i;
+
 	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		path = ft_substr(env[i], 0, j);
-		if (ft_strcmp(path, name) == 0)
-		{
-			free(path);
-			return (env[i] + j + 1);
-		}
-		free(path);
-		++i;
-	}
-	return (NULL);
+	while (ft_strncmp(env[i], "PATH", 4) != 0)
+		i++;
+	return (env[i] + 5);
 }
 
-char	*get_path(char *cmds, char **env)
+char	*get_cmds_path(char *cmds, char **env)
 {
 	int		i;
-	char	**split_path;
-	char	*to_execve;
-	char	*path;
+	char	*file_path;
+	char	**path;
 
 	i = 0;
-	split_path = ft_split(get_filepath("PATH", env), ':');
-	while (split_path[i])
+	file_path = get_filepath(env);
+	path = ft_split(file_path, ':');
+
+	while (path[i])
 	{
-		path = ft_strjoin(split_path[i], "/");
-		to_execve = ft_strjoin(path, cmds);
-		free(path);
-		if (access(to_execve, F_OK | X_OK) == 0)
-		{
-			free_split(split_path);
-			return (to_execve);
-		}
-		free(to_execve);
-		++i;
+		if (access)
 	}
-	free_split(split_path);
-	return (cmds);
+	free_split(path);
 }

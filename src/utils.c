@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:56:16 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 03:03:02 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/06 12:41:25 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	my_open(char *file_name, int flag)
 		opened = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (opened == -1)
 	{
-		perror("Error: Open");
+		perror("Error Open()");
 		exit(0);
 	}
 	return (opened);
@@ -56,4 +56,13 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i] && (s1[i] || s2[i]))
 		i++;
 	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+}
+
+void	printsplit(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		ft_printf("env[%d]: %s\n", i, env[i]);
 }
