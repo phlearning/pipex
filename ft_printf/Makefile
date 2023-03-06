@@ -6,7 +6,7 @@
 #    By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 13:33:42 by pvong             #+#    #+#              #
-#    Updated: 2023/02/09 12:42:43 by pvong            ###   ########.fr        #
+#    Updated: 2023/03/05 22:43:21 by pvong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ RED=\033[0;31m
 BLUE=\033[0;34m
 END=\033[0m
 
-INCLUDES	= -I ./includes
+INCLUDES	= -I ./includes -I ./libft
 
 CC			= gcc
 

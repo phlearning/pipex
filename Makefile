@@ -25,6 +25,9 @@ LIB_LNK			= -L $(LIBFT_DIR) -lft
 SRC_DIR			= src
 
 SOURCES			= 	main.c \
+					parsing.c \
+					process.c \
+					utils.c
 
 
 SRC = $(addprefix $(SRC_DIR)/,$(SOURCES))
@@ -42,7 +45,7 @@ CC				= gcc
 
 CFLAGS 			= -Wall -Werror -Wextra
 
-INCLUDE 		= -I include
+INCLUDE 		= -I includes
 
 DEBUG			= debug
 
@@ -56,7 +59,7 @@ tempfs:
 
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
-	@$(CC) $(CFLAGS) $(LIB_INC) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
 	@echo "Compiling $@..."
 
 $(NAME):	$(OBJS)
