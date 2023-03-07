@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:53:14 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 12:40:49 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 17:39:01 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,41 @@
  * @param cmds 
  * @param env 
  */
-// void	my_execve(char *cmds, char **env)
-// {
-// 	char	**cmds_flags;
-// 	char	*path;
+void	my_execve(int ac, char **cmds, char **env)
+{
+	char	*path;
 
-// }
+	if (ac < 5)
+		exit(1);
+	path = get_cmds_path(cmds[0], env);
+	execve(path, cmds, env);
+	perror("Error execve()");
+}
 
-// void	child_process(int *fd, char **av, char **env)
-// {
-// 	int	child_fd;
+void	child_process(t_data data)
+{
+	int	child_fd;
 
-// 	child_fd = my_open(av[1], 0);
-// 	dup2(fd[1], STDOUT_FILENO);
-// 	dup2(child_fd, STDIN_FILENO);
-// 	close(fd[0]);
-//  my_execve();
-//	perror("Error");
-// }
+	child_fd = my_open(data.av[1], 0);
+	dup2(data.fd[1], STDOUT_FILENO);
+	dup2(child_fd, STDIN_FILENO);
+	close(data.fd[0]);
+	close(child_fd);
+	my_execve(data.ac, data.cmd[0], data.env);
+	perror("Error");
+	exit(EXIT_FAILURE);
+}
 
-// void	parent_process(int *fd, char **av, char **env)
-// {
-// 	int	parent_fd;
+void	parent_process(t_data data)
+{
+	int	parent_fd;
 
-// 	parent_fd = my_open(av[1], 1);
-
-// }
+	parent_fd = my_open(data.av[data.ac - 1], 1);
+	dup2(parent_fd, STDOUT_FILENO);
+	dup2(data.fd[0], STDIN_FILENO);
+	close(data.fd[1]);
+	close(parent_fd);
+	my_execve(data.ac, data.cmd[1], data.env);
+	perror("Error");
+	exit(EXIT_FAILURE);
+}

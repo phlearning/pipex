@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:56:16 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 12:41:25 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 16:41:09 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	my_open(char *file_name, int flag)
 	if (opened == -1)
 	{
 		perror("Error Open()");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	return (opened);
 }
@@ -65,4 +65,14 @@ void	printsplit(char **env)
 	i = -1;
 	while (env[++i])
 		ft_printf("env[%d]: %s\n", i, env[i]);
+}
+
+void	free_cmds(char ***cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+		free_split(cmd[i]);
+	free(cmd);
 }
