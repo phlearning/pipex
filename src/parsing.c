@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:58:35 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/07 18:18:24 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 18:47:35 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ char	*get_cmds_path(char *cmds, char **env)
 		free(cmdpath);
 	}
 	perror("Error Command Not Found");
-	exit(1);
+	return (0);
 }

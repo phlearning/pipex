@@ -29,8 +29,11 @@ SOURCES			= 	main.c \
 					process.c \
 					utils.c
 
+SRCB_DIR		=	src_bonus
+SOURCESB		=	main_bonus.c \
 
 SRC = $(addprefix $(SRC_DIR)/,$(SOURCES))
+SRCB = $(addprefix $(SRCB_DIR)/,$(SOURCESB))
 
 # OBJS
 
@@ -40,6 +43,10 @@ OBJS 			= $(addprefix ./$(OBJS_DIR)/,$(SOURCES:.c=.o))
 OBJS_DIRFS 		= objsfs
 TMPFS			= $(OBJS_DIRFS)
 OBJSFS 			= $(addprefix ./$(OBJS_DIRFS)/,$(SOURCES:.c=.o))
+
+OBJSB_DIR		= objs_bonus
+TMPB			= $(OBJSB_DIR)
+OBJSB			= $(addprefix ./$(OBJSB_DIR), $(SOURCESB:.c=.o))
 
 # Compiling
 
@@ -72,6 +79,22 @@ $(NAME): $(TMP) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_LNK) $(FT_PRINTF_LNK) -o $(NAME)
 	@echo "$(GREEN) $(NAME) Compiled $(END)"
 
+$(TMPB):
+	@mkdir -p $(OBJSB_DIR)
+
+$(OBJSB_DIR)/%.o: $(SRCB_DIR)/%.c
+	@mkdir -p $(OBJSB_DIR)
+	@$(CC) $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
+	@echo "Compiling $@..."
+
+# bonus: $(TMPB) $(OBJSB)
+# 	@make -s -C $(LIBFT_DIR)
+# 	@echo "$(GREEN) Libft compiled $(END)"
+# 	@make -s -C $(FT_PRINTF_DIR)
+# 	@echo "$(GREEN) Ft_printf compiled $(END)"
+# 	@$(CC) $(CFLAGS) $(OBJSB) $(LIB_LNK) $(FT_PRINTF_LNK) -o $(NAME)
+# 	@echo "$(GREEN) $(NAME) Compiled $(END)"
+
 $(OBJS_DIRFS)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIRFS)
 	@$(CC) -g3 -fsanitize=address $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
@@ -102,6 +125,21 @@ clean:
 	@echo "$(BLUE)$(NAME) Cleaning Done$(END)"
 
 fclean: clean
+	@rm -rf $(NAME)
+	@rm -f debug
+	@make -sC $(LIBFT_DIR) fclean
+	@make -sC $(FT_PRINTF_DIR) fclean
+	@echo "$(BLUE)$(NAME) Fcleaning Done$(END)"
+
+clean_bonus:
+	@rm -rf $(OBJSB_DIR)
+	@rm -rf $(OBJS_DIRFS)
+	@rm -rf checkfunction.txt
+	@make -sC $(LIBFT_DIR) clean
+	@make -sC $(FT_PRINTF_DIR) clean
+	@echo "$(BLUE)$(NAME) Cleaning Done$(END)"
+
+fclean_bonus: clean_bonus
 	@rm -rf $(NAME)
 	@rm -f debug
 	@make -sC $(LIBFT_DIR) fclean
