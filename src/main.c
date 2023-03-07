@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:01 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 12:48:15 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 12:18:46 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,12 @@
 
 int	main(int ac, char **av, char **env)
 {
-	(void) ac;
-	(void) av;
-	// printsplit(env);
+	(void) 	ac;
+	(void) 	av;
+	t_data	data;
 
-	char	**path;
-	char *path_to_bin;
-	path_to_bin = get_filepath(env);
-	ft_printf("path: %s\n", path_to_bin);
+	data.cmd_path = get_cmds_path(data.cmd[0], env);
 	ft_printf("--------\n");
-	path = ft_split(path_to_bin, ':');
-	printsplit(path);
-
-	free_split(path);
+	ft_printf("cmdspath: %s\n", data.cmd_path);
+	free(data.cmd_path);
 }

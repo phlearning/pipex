@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:58:35 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 13:15:57 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 11:24:23 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,25 @@ char	*get_cmds_path(char *cmds, char **env)
 	int		i;
 	char	*file_path;
 	char	**path;
+	char	*tmp;
+	char	*cmdpath;
 
-	i = 0;
+	i = -1;
 	file_path = get_filepath(env);
 	path = ft_split(file_path, ':');
-
-	while (path[i])
+	while (path[++i])
 	{
-		if (access)
+		tmp = ft_strjoin(path[i], "/");
+		cmdpath = ft_strjoin(tmp, cmds);
+		free(tmp);
+		if (access(cmdpath, F_OK) == 0)
+		{
+			free_split(path);
+			return (cmdpath);
+		}
+		free(cmdpath);
 	}
+	free(file_path);
 	free_split(path);
+	return (0);
 }

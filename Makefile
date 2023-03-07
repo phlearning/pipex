@@ -35,8 +35,10 @@ SRC = $(addprefix $(SRC_DIR)/,$(SOURCES))
 # OBJS
 
 OBJS_DIR 		= objs
+TMP				= $(OBJS_DIR)
 OBJS 			= $(addprefix ./$(OBJS_DIR)/,$(SOURCES:.c=.o))
 OBJS_DIRFS 		= objsfs
+TMPFS			= $(OBJS_DIRFS)
 OBJSFS 			= $(addprefix ./$(OBJS_DIRFS)/,$(SOURCES:.c=.o))
 
 # Compiling
@@ -49,12 +51,12 @@ INCLUDE 		= -I includes
 
 DEBUG			= debug
 
-all: temp $(NAME)
+all:	$(NAME)
 
-temp:
+$(TMP):
 	@mkdir -p $(OBJS_DIR)
 
-tempfs:
+$(TMPFS):
 	@mkdir -p $(OBJS_DIRFS)
 
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
@@ -62,7 +64,7 @@ $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
 	@echo "Compiling $@..."
 
-$(NAME):	$(OBJS)
+$(NAME): $(TMP) $(OBJS)
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(GREEN) Libft compiled $(END)"
 	@make -s -C $(FT_PRINTF_DIR)
@@ -72,10 +74,10 @@ $(NAME):	$(OBJS)
 
 $(OBJS_DIRFS)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIRFS)
-	@$(CC) -g3 -fsanitize=address $(CFLAGS) $(LIB_INC) $(INCLUDE) -c $< -o $@
+	@$(CC) -g3 -fsanitize=address $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
 	@echo "Compiling $@..."
 
-fsanitize: tempfs $(OBJSFS)
+fsanitize: $(TMPFS) $(OBJSFS)
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(GREEN) Libft compiled $(END)"
 	@make -s -C $(FT_PRINTF_DIR)

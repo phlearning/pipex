@@ -9,6 +9,7 @@
 		"stdarg.h": "c",
 		"stdlib.h": "c",
 		"stdio.h": "c",
-		"locale": "c"
+		"locale": "c",
+		"wait.h": "c"
 	}
 }

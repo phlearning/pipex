@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:24 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/06 12:33:42 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 12:14:27 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
+typedef struct s_data
+{
+	char	*cmd_path;
+	char	**cmd;
+}	t_data;
+
 /* Utils */
 int		my_open(char *file_name, int flag);
 int		ft_strcmp(char *s1, char *s2);
@@ -36,6 +42,5 @@ char	*get_cmds_path(char *cmds, char **env);
 void	my_execve(char *cmds, char **env);
 void	child_process(int *fd, char **av, char **env);
 void	parent_process(int *fd, char **av, char **env);
-
 
 #endif
