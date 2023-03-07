@@ -32,6 +32,9 @@ SOURCES			= 	main.c \
 SRCB_DIR		=	src_bonus
 
 SOURCESB		=	main_bonus.c \
+					parsing_bonus.c \
+					process_bonus.c \
+					utils_bonus.c
 
 SRC = $(addprefix $(SRC_DIR)/,$(SOURCES))
 SRCB = $(addprefix $(SRCB_DIR)/,$(SOURCESB))
@@ -47,7 +50,7 @@ OBJSFS 			= $(addprefix ./$(OBJS_DIRFS)/,$(SOURCES:.c=.o))
 
 OBJSB_DIR		= objs_bonus
 TMPB			= $(OBJSB_DIR)
-OBJSB			= $(addprefix ./$(OBJSB_DIR)/, $(SOURCESB:.c=.o))
+OBJSB			= $(addprefix ./$(OBJSB_DIR)/,$(SOURCESB:.c=.o))
 
 # Compiling
 
