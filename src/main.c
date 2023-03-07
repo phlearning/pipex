@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:01 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/07 17:39:41 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 18:17:39 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ t_data	init_data(int ac, char **av, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	int	fd[2];
-	int	pid;
+	int		pid;
 	t_data	data;
 
 	if (ac < 5)
@@ -84,12 +83,11 @@ int	main(int ac, char **av, char **env)
 		exit(1);
 	}
 	data = init_data(ac, av, env);
-	if (pipe(fd) == -1)
+	if (pipe(data.fd) == -1)
 	{
 		perror("Error pipe()");
 		exit(-1);
 	}
-	data.fd = fd;
 	pid = fork();
 	if (pid < 0)
 	{

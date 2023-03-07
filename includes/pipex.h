@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:24 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/07 17:39:17 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/07 18:16:32 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_data
 	char	**env;
 	char	**cmd_path;
 	char	***cmd;
-	int		*fd;
+	int		fd[2];
 }	t_data;
 
 /* Utils */
