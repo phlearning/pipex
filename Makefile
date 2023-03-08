@@ -54,6 +54,8 @@ OBJSB			= $(addprefix ./$(OBJSB_DIR)/,$(SOURCESB:.c=.o))
 
 # Compiling
 
+BONUSF			= .bonus
+
 CC				= gcc
 
 CFLAGS 			= -Wall -Werror -Wextra
@@ -91,12 +93,15 @@ $(OBJSB_DIR)/%.o: $(SRCB_DIR)/%.c
 	@$(CC) $(CFLAGS) $(LIB_INC) $(FT_PRINTF_INC) $(INCLUDE) -c $< -o $@
 	@echo "Compiling $@..."
 
-bonus: $(TMPB) $(OBJSB)
+bonus: $(BONUSF)
+
+$(BONUSF): $(TMPB) $(OBJSB)
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(GREEN) Libft compiled $(END)"
 	@make -s -C $(FT_PRINTF_DIR)
 	@echo "$(GREEN) Ft_printf compiled $(END)"
 	@$(CC) $(CFLAGS) $(OBJSB) $(LIB_LNK) $(FT_PRINTF_LNK) -o $(NAME)
+	@echo "bonuscache" > $(BONUSF)
 	@echo "$(GREEN) $(NAME) Compiled $(END)"
 
 $(OBJS_DIRFS)/%.o: $(SRC_DIR)/%.c
@@ -122,6 +127,7 @@ git:
 
 clean:
 	@rm -rf $(OBJS_DIR)
+	@rm -f $(BONUSF)
 	@rm -rf $(OBJSB_DIR)
 	@rm -rf $(OBJS_DIRFS)
 	@rm -rf checkfunction.txt
@@ -138,4 +144,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all fclean clean re temp
+.PHONY: all fclean clean re temp bonus

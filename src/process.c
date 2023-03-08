@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:53:14 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/07 18:44:26 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/08 14:04:31 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	child_process(t_data data)
 	close(data.fd[0]);
 	close(child_fd);
 	my_execve(data.ac, data.cmd[0], data.env);
-	perror("Error");
 	exit(EXIT_FAILURE);
 }
 
@@ -54,6 +53,5 @@ void	parent_process(t_data data)
 	close(data.fd[1]);
 	close(parent_fd);
 	my_execve(data.ac, data.cmd[1], data.env);
-	perror("Error");
 	exit(EXIT_FAILURE);
 }
