@@ -5,52 +5,46 @@
 #                                                     +:+ +:+         +:+      #
 #    By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/10 11:13:51 by pvong             #+#    #+#              #
-#    Updated: 2022/10/20 16:42:05 by pvong            ###   ########.fr        #
+#    Created: 2023/03/08 14:49:58 by pvong             #+#    #+#              #
+#    Updated: 2023/03/10 17:16:05 by pvong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
+NAME = libft.a
 
-SRCS	= ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
-		  ft_strchr.c ft_strlen.c ft_strncmp.c ft_strrchr.c ft_tolower.c ft_toupper.c\
-		  ft_strlcpy.c ft_strlcat.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
-		  ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
-		  ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c ft_split.c ft_strmapi.c \
-		  ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c 
+LIBFT = ./org_libft/libft.a
+LIBFT_DIR = ./org_libft
+FT_PRINTF = ./ft_printf/libftprintf.a
+FT_PRINTF_DIR = ./ft_printf
+GNL = ./gnl/libgnl.a
+GNL_DIR = ./gnl
 
-BONUS	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-		  ft_lstdelone.c
+# Colors
+GREEN			=	\033[0;32m
+RED				=	\033[0;31m
+BLUE			=	\033[0;34m
+END				=	\033[0m
 
-OBJS	= $(SRCS:.c=.o)
+all: $(NAME)
 
-BONUS_OBJS	= $(BONUS:.c=.o)
+$(NAME): $(FT_PRINTF) $(GNL)
+		@cp $(GNL) .
+		@mv libgnl.a $(NAME)
+		@ar rcs $(NAME) $(FT_PRINTF)
 
-CC		= gcc
+$(FT_PRINTF):
+	@make -C $(FT_PRINTF_DIR)
 
-CFLAGS	= -Wall -Werror -Wextra
-
-.c.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-all:		$(NAME)
-
-$(NAME):	$(OBJS)
-			ar rc $(NAME) $(OBJS)
-			ranlib $(NAME)
-				
-bonus:		$(OBJS) $(BONUS_OBJS)
-			ar rc $(NAME) $(OBJS) $(BONUS_OBJS)
-			ranlib $(NAME)
-
+$(GNL):
+	@make -C $(GNL_DIR)
 
 clean:
-			rm -f $(OBJS)
+	@make -C $(FT_PRINTF_DIR) clean
+	@make -C $(GNL_DIR) clean
+	@make -C $(LIBFT_DIR) clean
 
-fclean:		clean
-			rm -f $(NAME)
-
-re:			fclean all
-
-.PHONY:		all clean fclean re bonus
-
+fclean: clean
+	@make -C $(FT_PRINTF_DIR) fclean
+	@make -C $(GNL_DIR) fclean
+	@make -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)

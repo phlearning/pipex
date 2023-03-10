@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:01 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/07 19:11:23 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/10 13:49:02 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,8 @@ int	main(int ac, char **av, char **env)
 	int		pid;
 	t_data	data;
 
-	if (ac < 5)
-	{
-		perror("./pipex infile cmds1 cmds2 outfile");
-		exit(1);
-	}
-	data = init_data(ac, av, env);
-	if (pipe(data.fd) == -1)
-	{
-		perror("Error pipe()");
-		exit(-1);
-	}
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("Error fork()");
-		exit(0);
-	}
-	if (pid == 0)
-		child_process(data);
-	else
-		parent_process(data);
+	
+
+
 	return (0);
 }
-
-/* int	main(int ac, char **av, char **env)
-{
-	(void) 	ac;
-	(void) 	av;
-	t_data	data;
-
-	if (ac >= 3)
-	{
-		data.cmd = malloc(sizeof(char **) * (ac - 3));
-		data.cmd[0] = ft_split(av[2], ' ');
-		data.cmd_path = get_cmds_path(data.cmd[0][0], env);
-		ft_printf("--------\n");
-		ft_printf("cmdspath: %s\n", data.cmd_path);
-		execve(data.cmd_path, data.cmd[0], env);
-	}
-	free(data.cmd_path);
-	free_cmds(data.cmd);
-} */
