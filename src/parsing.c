@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:58:35 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/08 14:01:36 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/12 18:51:27 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*get_filepath(char **env)
 	i = 0;
 	while (ft_strncmp(env[i], "PATH", 4) != 0)
 		i++;
-	if (ft_strncmp(env[i], "PATH", 4) != 0)
-		return (".");
 	return (env[i] + 5);
 }
 
@@ -47,6 +45,7 @@ char	*get_cmds_path(char *cmds, char **env)
 		}
 		free(cmdpath);
 	}
+	free_split(path);
 	perror("Error Command Not Found");
 	return (0);
 }

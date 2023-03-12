@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:24 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/10 15:06:31 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/12 19:14:50 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 # include "libft.h"
-# include "ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -22,24 +21,13 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-typedef struct s_data
-{
-	int		ac;
-	char	**av;
-	char	**env;
-	char	**cmd_path;
-	char	***cmd;
-	int		fd[2];
-}	t_data;
-
 /* Utils */
 
 int		my_open(char *file_name, int flag);
-int		ft_strcmp(char *s1, char *s2);
 void	free_split(char **split);
 void	printsplit(char **env);
 void	free_cmds(char ***cmd);
-t_data	init_data(int ac, char **av, char **env);
+void	exit_error(char *str);
 
 /* Parsing */
 
@@ -48,8 +36,15 @@ char	*get_cmds_path(char *cmds, char **env);
 
 /* Process */
 
-void	my_execve(int ac, char **cmds, char **env);
-void	child_process(t_data data);
-void	parent_process(t_data data);
+void	my_execve(char *cmd_av, char **env);
+void	pipe_exec(char *cmd, char **env);
+void	pipe_cmd(int ac, char **av, char **env);
+
+/* ------ Bonus ------ */
+
+/* Here_doc */
+
+void	here_doc(int ac, char **av);
+void	input_here_doc(char **av, int *fd);
 
 #endif

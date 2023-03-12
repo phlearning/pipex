@@ -7,10 +7,10 @@ BLUE			=	\033[0;34m
 END				=	\033[0m
 
 # Libft
-FT_PRINTF_DIR	= ./libft/ft_printf
+
 LIBFT_DIR		= libft/
 LIBFTA			= $(addprefix ./$(LIBFT_DIR)/, libft.a)
-LIB_INC			= -I $(LIBFT_DIR)/org_libft/includes -I $(FT_PRINTF_DIR)/includes
+LIB_INC			= -I $(LIBFT_DIR)/includes
 LIB_LNK			= -L $(LIBFT_DIR) -lft
 
 
@@ -20,8 +20,9 @@ SRC_DIR			= src
 
 SOURCES			= 	main.c \
 					parsing.c \
-					process.c \
-					utils.c
+					exec.c \
+					utils.c \
+					heredoc.c
 
 SRCB_DIR		=	src_bonus
 
@@ -82,10 +83,10 @@ $(TMPB):
 
 $(OBJSB_DIR)/%.o: $(SRCB_DIR)/%.c
 	@mkdir -p $(OBJSB_DIR)
-	@$(CC) $(CFLAGS) $(LIB_INC) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LIB_INC) $(LIB_LNK) -c $< -o $@
 	@echo "Compiling $@..."
 
-bonus: $(BONUSF)
+# bonus: $(BONUSF)
 
 $(BONUSF): $(TMPB) $(OBJSB)
 	@make -s -C $(LIBFT_DIR)
