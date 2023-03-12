@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:56:16 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 18:55:50 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/12 19:51:29 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ int	my_open(char *file_name, int flag)
 		opened = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (flag == 2)
 		opened = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0664);
-	if (opened == -1)
+	if (opened == -1 && flag == 0)
+	{
+		perror("Error Open()");
+		exit(0);
+	}
+	if (opened == -1 && (flag == 1 || flag == 2))
 	{
 		perror("Error Open()");
 		exit(1);

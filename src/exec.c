@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:53:14 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 19:14:08 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/12 20:22:15 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,20 @@ void	my_execve(char *cmd_av, char **env)
 	char	**cmds_tab;
 
 	cmds_tab = ft_split(cmd_av, ' ');
-	path = get_cmds_path(cmds_tab[0], env);
+	if (access(cmds_tab[0], F_OK) == 0)
+		path = cmds_tab[0];
+	else
+		path = get_cmds_path(cmds_tab[0], env);
 	if (path == NULL)
-		return ;
+	{
+		free_split(cmds_tab);
+		exit(1);
+	}
 	if (execve(path, cmds_tab, env) == -1)
 	{
-		perror("Error execve()");
+		perror("Error Execve()");
 		free_split(cmds_tab);
+		free(path);
 		exit(1);
 	}
 }
