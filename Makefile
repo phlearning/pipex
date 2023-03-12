@@ -22,14 +22,14 @@ SOURCES			= 	main.c \
 					parsing.c \
 					exec.c \
 					utils.c \
-					heredoc.c
 
 SRCB_DIR		=	src_bonus
 
 SOURCESB		=	main_bonus.c \
 					parsing_bonus.c \
-					process_bonus.c \
-					utils_bonus.c
+					exec_bonus.c \
+					utils_bonus.c \
+					heredoc_bonus.c
 
 SRC = $(addprefix $(SRC_DIR)/,$(SOURCES))
 SRCB = $(addprefix $(SRCB_DIR)/,$(SOURCESB))
@@ -56,6 +56,7 @@ CC				= gcc
 CFLAGS 			= -Wall -Werror -Wextra
 
 INCLUDE 		= -I includes
+INCLUDEB		= -I includes_bonus
 
 DEBUG			= debug
 
@@ -83,10 +84,10 @@ $(TMPB):
 
 $(OBJSB_DIR)/%.o: $(SRCB_DIR)/%.c
 	@mkdir -p $(OBJSB_DIR)
-	@$(CC) $(CFLAGS) $(LIB_INC) $(LIB_LNK) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LIB_INC) $(INCLUDEB) -c $< -o $@
 	@echo "Compiling $@..."
 
-# bonus: $(BONUSF)
+bonus: $(BONUSF)
 
 $(BONUSF): $(TMPB) $(OBJSB)
 	@make -s -C $(LIBFT_DIR)

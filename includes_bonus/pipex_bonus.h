@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:33:24 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 20:38:00 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/12 20:35:23 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "libft.h"
 # include <unistd.h>
@@ -39,5 +39,12 @@ char	*get_cmds_path(char *cmds, char **env);
 void	my_execve(char *cmd_av, char **env);
 void	pipe_exec(char *cmd, char **env);
 void	pipe_cmd(int ac, char **av, char **env);
+
+/* ------ Bonus ------ */
+
+/* Here_doc */
+
+void	here_doc(int ac, char **av);
+void	input_here_doc(char **av, int *fd);
 
 #endif
