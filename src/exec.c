@@ -6,12 +6,24 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:53:14 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 20:22:15 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/13 13:48:33 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/**
+ * cmd_av is respectively av[2] ... av[ac - 2]
+ * cmds_tab is the commands and its flags;
+ * For example cmds_tab[2] = {"ls", "-l"};
+ * 
+ * Get the cmds;
+ * Look for its path;
+ * Execute the commands;
+ * if not exit;
+ * @param cmd_av 
+ * @param env 
+ */
 void	my_execve(char *cmd_av, char **env)
 {
 	char	*path;
@@ -36,10 +48,19 @@ void	my_execve(char *cmd_av, char **env)
 	}
 }
 
+/**
+ * Pipe the fd (allocates a pair of fd and allow a one way data flow);
+ * fd[0] -> connect to the read end of the pipe
+ * fd[1] -> connects to the write end
+ * Fork dupe the process; Child pid == 0; Parent pid > 0; 
+ * Pid == -1 indicates an error to the fork;
+ * @param cmd 
+ * @param env 
+ */
 void	pipe_exec(char *cmd, char **env)
 {
-	int	pid;
-	int	fd[2];
+	pid_t	pid;
+	int		fd[2];
 
 	if (pipe(fd) == -1)
 		exit_error("Error Pipe()");
@@ -49,31 +70,33 @@ void	pipe_exec(char *cmd, char **env)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], 1);
+		dup2(fd[1], STDOUT_FILENO);
 		my_execve(cmd, env);
 	}
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], 0);
+		dup2(fd[0], STDIN_FILENO);
 	}
 }
 
+/**
+ * Create the outfile;
+ * I is the index of the commands; 
+ * av[2] is the first commands;
+ * av[ac - 2] the last one;
+ * Pipe the commands and execute them;
+ * @param ac 
+ * @param av 
+ * @param env 
+ */
 void	pipe_cmd(int ac, char **av, char **env)
 {
 	int	outfile_fd;
-	int	here_doc;
 	int	i;
 
-	here_doc = 0;
-	if (ft_strncmp(av[1], "here_doc", 8) == 0)
-	{
-		outfile_fd = my_open(av[ac - 1], 2);
-		here_doc = 1;
-	}
-	else
-		outfile_fd = my_open(av[ac - 1], 1);
-	i = 2 + here_doc;
+	outfile_fd = my_open(av[ac - 1], 1);
+	i = 2;
 	while (i < ac - 2)
 		pipe_exec(av[i++], env);
 	dup2(outfile_fd, STDOUT_FILENO);

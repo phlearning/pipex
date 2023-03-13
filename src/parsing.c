@@ -6,12 +6,18 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:58:35 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 20:22:10 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/13 13:56:50 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/**
+ * Look for "PATH" in env
+ * and return the corresponding path_line;
+ * @param env 
+ * @return char* 
+ */
 char	*get_filepath(char **env)
 {
 	int	i;
@@ -22,6 +28,16 @@ char	*get_filepath(char **env)
 	return (env[i] + 5);
 }
 
+/**
+ * Get the line and separate it by ":";
+ * Add "/" at the end of the path;
+ * Add the cmd to the path;
+ * Check for access to the cmd;
+ * Return cmd path;
+ * @param cmds 
+ * @param env 
+ * @return char* 
+ */
 char	*get_cmds_path(char *cmds, char **env)
 {
 	int		i;

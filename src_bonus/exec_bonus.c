@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 01:53:14 by pvong             #+#    #+#             */
-/*   Updated: 2023/03/12 20:32:10 by pvong            ###   ########.fr       */
+/*   Updated: 2023/03/13 13:52:12 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	my_execve(char *cmd_av, char **env)
 
 void	pipe_exec(char *cmd, char **env)
 {
-	int	pid;
-	int	fd[2];
+	pid_t	pid;
+	int		fd[2];
 
 	if (pipe(fd) == -1)
 		exit_error("Error Pipe()");
@@ -49,13 +49,13 @@ void	pipe_exec(char *cmd, char **env)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], 1);
+		dup2(fd[1], STDOUT_FILENO);
 		my_execve(cmd, env);
 	}
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], 0);
+		dup2(fd[0], STDIN_FILENO);
 	}
 }
 
